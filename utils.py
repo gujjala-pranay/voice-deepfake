@@ -11,7 +11,7 @@ class AudioDataset(Dataset):
     Custom Dataset for ASVspoof 2019.
     Loads audio files and converts them to Mel-Spectrograms.
     """
-    def __init__(self, protocol_file, data_dir, transform=None, max_len=64000):
+    def __init__(self, protocol_file, data_dir, transform=None, max_len=64000, limit=10000):
         self.data_dir = data_dir
         self.transform = transform
         self.max_len = max_len
@@ -20,7 +20,11 @@ class AudioDataset(Dataset):
         
         if os.path.exists(protocol_file):
             with open(protocol_file, 'r') as f:
-                for line in f:
+                lines = f.readlines()
+                # Use a medium dataset size
+                if limit and len(lines) > limit:
+                    lines = lines[:limit]
+                for line in lines:
                     parts = line.strip().split()
                     if len(parts) == 5:
                         file_name = parts[1]
