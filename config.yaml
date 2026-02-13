@@ -1,0 +1,76 @@
+# Configuration for Audio Deepfake Detection System
+
+# Model Configuration
+MODEL:
+  ENHANCED:
+    name: "DeepfakeDetectorCNN"
+    features_used: 3  # Spectral, MFCC, Phase
+    num_classes: 2
+    path: "model/enhanced_model.pth"
+    
+  LIGHTWEIGHT:
+    name: "LightweightDetector"
+    features_used: 1  # Spectral only
+    num_classes: 2
+    path: "model/lightweight_model.pth"
+    
+  ENSEMBLE:
+    STANDARD:
+      name: "EnsembleDetector"
+      strategy: "weighted_average"
+      path: "model/ensemble_standard_model.pth"
+      
+    MULTISCALE:
+      name: "MultiScaleEnsemble"
+      strategy: "multi_resolution"
+      path: "model/ensemble_multiscale_model.pth"
+      
+    ADAPTIVE:
+      name: "AdaptiveEnsemble"
+      strategy: "input_aware_weighting"
+      path: "model/ensemble_adaptive_model.pth"
+
+# Audio Processing
+AUDIO:
+  sample_rate: 16000
+  max_length: 32000   # reduced to 2 seconds
+
+TRAINING:
+  batch_size: 8       # reduce from 32
+  learning_rate: 0.001
+  epochs: 15
+  optimizer: "adam"
+  weight_decay: 0.0001
+  label_smoothing: 0.0   # disable for now
+  
+  AUGMENTATION:
+    enabled: false      # disable for speed
+    
+  SCHEDULER:
+    type: "reduce_on_plateau"
+    patience: 3
+    
+  GRADIENT_ACCUMULATION:
+    steps: 1
+    
+  MIXED_PRECISION:
+    enabled: false
+
+    
+# API Configuration
+API:
+  host: "0.0.0.0"
+  port: 8000
+  max_upload_size: 200  # MB
+  
+# Inference
+INFERENCE:
+  use_cuda: true
+  batch_size: 1
+  dtype: "float32"
+
+# Logging
+LOGGING:
+  level: "info"
+  save_dir: "logs"
+  save_predictions: true

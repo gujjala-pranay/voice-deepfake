@@ -1,13 +1,36 @@
-streamlit
-torch
-torchvision
-librosa
-numpy
-matplotlib
-pandas
-scikit-learn
-seaborn
+# Core ML/DL libraries
+streamlit>=1.28.0
+torch>=2.0.0
+torchvision>=0.15.0
+librosa>=0.10.0
+numpy>=1.24.0
+matplotlib>=3.8.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+seaborn>=0.12.0
 
-fastapi
-uvicorn
-python-multipart
+# Web framework
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+
+# Audio processing and augmentation
+audiomentations>=0.35.0
+soundfile>=0.12.1
+
+# Performance monitoring
+psutil>=5.9.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# Kaggle dataset support
+kaggle>=1.5.0
+
+# Optional: GPU support (uncomment if using CUDA)
+# torch>=2.0.0+cu121
+# torchvision>=0.15.0+cu121
